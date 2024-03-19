@@ -3,7 +3,6 @@ let conn = null;
 const getConnection = async () => {
   if (!conn) {
     const Sequelize = require("sequelize");
-    const DB_CONFIG = JSON.parse(process.env.SQL);
     const {
       SQL_DB_HOST,
       SQL_DB_NAME,
@@ -11,8 +10,13 @@ const getConnection = async () => {
       SQL_DB_PORT,
       SQL_DB_PASSWORD,
       DATABASE_TYPE,
-      ADDITIONAL_CONFIG
-    } = DB_CONFIG;
+      ADDITIONAL_CONFIG,
+      POOL_MAX,
+      POOL_MIN,
+      POOL_IDLE_TIME,
+      POOL_ACQUIRE,
+      LOGGING,
+    } = JSON.parse(process.env.SQL);
 
     const config = {
       database: SQL_DB_NAME,
@@ -22,13 +26,13 @@ const getConnection = async () => {
       password: SQL_DB_PASSWORD,
       dialect: DATABASE_TYPE,
       dialectOptions: {
-        multipleStatements: true
+        multipleStatements: true,
       },
       pool: {
-        max: 1,
-        min: 0,
-        idle: 20000,
-        acquire: 20000
+        max: POOL_MAX,
+        min: POOL_MIN,
+        idle: POOL_IDLE_TIME,
+        acquire: POOL_ACQUIRE,
       },
       logging: false, // To avoid sql query logs,
       ...ADDITIONAL_CONFIG
