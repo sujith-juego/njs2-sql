@@ -10,6 +10,7 @@ const getConnection = async () => {
       SQL_DB_PORT,
       SQL_DB_PASSWORD,
       DATABASE_TYPE,
+      SQL_STORAGE,
       ADDITIONAL_CONFIG,
       POOL_MAX,
       POOL_MIN,
@@ -39,8 +40,8 @@ const getConnection = async () => {
     };
 
     if (DATABASE_TYPE === "sqlite") {
-      if (DB_CONFIG.SQL_STORAGE) {
-        config.storage = DB_CONFIG.SQL_STORAGE;
+      if (SQL_STORAGE) {
+        config.storage = SQL_STORAGE;
       }
       else {
         config.storage = ":memory"
