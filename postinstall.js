@@ -3,8 +3,13 @@ const fs = require('fs');
 const path = require('path');
 const LIBRARY_NAME = process.env.npm_package_name;
 const EXEC_DIR = process.argv.slice(2)[process.argv.slice(2).indexOf("--init-dir") + 1];
+console.log("library name :", LIBRARY_NAME);
+console.log("exec dir :", EXEC_DIR);
 
 const initEnv = async () => {
+  // Sujith
+  console.log(path.resolve(EXEC_DIR, `node_modules/${LIBRARY_NAME}/env.json`));
+  
   let envFileContents = fs.readFileSync(path.resolve(EXEC_DIR, `node_modules/${LIBRARY_NAME}/env.json`), 'utf8');
   let projectEnvFileContents = fs.readFileSync(path.resolve(EXEC_DIR, `src/config/config.json`), 'utf8');
   envFileContents = JSON.parse(envFileContents);
